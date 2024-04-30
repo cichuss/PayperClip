@@ -1,0 +1,53 @@
+﻿@model PayperClip.Models.Order
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Your order is confirmed!</h1>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Payment)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Payment)
+        @if (User.Identity.IsAuthenticated)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.LoyaltyPoints)
+            </dt>
+            <dd class="col-sm-10" id = "error">
+                @if (Model.LoyaltyPoints != 0)
+                {
+                    <span class="text-danger">Loyalty Points: You don't have enough loyalty points!</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.LoyaltyPoints)
+                }
+            </dd>
+        }
+    </dl>
+</div>

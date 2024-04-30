@@ -1,0 +1,85 @@
+﻿@model IEnumerable<PayperClip.Models.Article>
+
+@{
+    ViewData["Title"] = "Shop";
+}
+
+<h1>Shop</h1>
+
+<form asp-action="Index">
+    <div class="form-group">
+        <label>Category</label>
+        <select class="form-control" name="id">
+            @foreach (var category in ViewBag.Categories)
+            {
+                <option value="@category.CategoryId">@category.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="OK" class="btn btn-primary" />
+    </div>
+    @if (@ViewBag.Current != null)
+    {
+        @foreach (var item in ViewBag.Categories)
+        {
+            @if (item.CategoryId == ViewBag.Current)
+            {
+                <p>Chosen category: </p>
+                <option selected>@item.Name</option>
+
+            }
+        }
+    }
+</form>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @if (item.ImagePath == null)
+                    {
+                        <img src="/image/no_image.jpg" width=50 height=50 />
+                    }
+                    else
+                    {
+                        <img src="/@item.ImagePath" width=50 height=50 />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    <a asp-controller="Cart" asp-action="Add" asp-route-id="@item.ArticleId">Add to cart</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

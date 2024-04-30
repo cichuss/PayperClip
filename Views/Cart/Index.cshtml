@@ -1,0 +1,67 @@
+﻿@model IEnumerable<(PayperClip.Models.Article, int)>
+@{
+    ViewData["Title"] = "Cart";
+}
+<h1>Your Cart</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Item1.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item1.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item1.Image)
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item1.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item1.Price)
+                </td>
+                <td>
+                    @if (item.Item1.ImagePath == null)
+                    {
+                        <img src="/image/no_image.jpg" width=50 height=50 />
+                    }
+                    else
+                    {
+                        <img src="/@item.Item1.ImagePath" width=50 height=50 />
+                    }
+                </td>
+                <td>
+                    <a asp-action="DecreaseQuantity" asp-route-id="@item.Item1.ArticleId">-</a> |
+                    @item.Item2 |
+                    <a asp-action="IncreaseQuantity" asp-route-id="@item.Item1.ArticleId">+</a>
+                </td>
+
+            </tr>
+        }
+        <tr>
+            <td colspan=100>
+                Total: @ViewBag.Total
+            </td>
+
+        </tr>
+
+    </tbody>
+
+</table>
+
+@if (Model.Any())
+{
+    <a asp-action="Order">Order</a>
+}

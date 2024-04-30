@@ -1,0 +1,47 @@
+﻿@model List<(string Name, decimal Price, Microsoft.AspNetCore.Http.IFormFile Image, int Quantity)>
+
+@{
+    ViewData["Title"] = "Order History";
+}
+
+<h1>Orders History</h1>
+
+<form asp-action="OrdersHistory">
+    <div class="form-group">
+        <label>Date Range</label>
+        <select class="form-control" name="dateRange">
+            <option value="lastWeek">Last Week</option>
+            <option value="lastMonth">Last Month</option>
+            <option value="last90Days">Last 90 Days</option>
+            <option value="all">All</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="OK" class="btn btn-primary" />
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Image</th>
+        <th>Quantity</th>
+        <th>Order details</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+            <td>@item.Image</td>
+            <td>@item.Quantity</td>
+           
+        </tr>
+    }
+    </tbody>
+</table>
+
