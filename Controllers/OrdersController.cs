@@ -94,6 +94,7 @@ namespace PayperClip.Controllers
             if (ModelState.IsValid)
             {
                 string cartString = Request.Cookies["cart"];
+                SetCookie("order", cartString, 7);
                 Dictionary<int, int> cart;
                 cart = new Dictionary<int, int>();
                 cartString = JsonConvert.SerializeObject(cart);
@@ -113,7 +114,7 @@ namespace PayperClip.Controllers
 
 public IActionResult OrdersHistory()
 {
-    string cartString = Request.Cookies["cart"];
+    string cartString = Request.Cookies["order"];
     Dictionary<int, int> cart;
     if (cartString != null)
     {
